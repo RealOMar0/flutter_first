@@ -1,6 +1,7 @@
 // ignore_for_file: file_names, avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
+import 'package:flutter_first/screens/Register_Screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -218,24 +219,31 @@ class _LoginScreenState extends State<LoginScreen> {
                 
                 SizedBox(height: 16),
                 
-                Center(
-                  child: Container(
-                    padding: EdgeInsets.fromLTRB(24, 8, 24, 8),
-                    alignment: Alignment.center,
-                    height: 50,
-
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Color.fromARGB(255, 28, 28, 30),
+                GestureDetector(
+                  onTap: (){
+                  Navigator.push(
+                    context,MaterialPageRoute(builder: ((context) => RegisterScreen()))
+                  );
+                  },
+                  child: Center(
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(24, 8, 24, 8),
+                      alignment: Alignment.center,
+                      height: 50,
+                  
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Color.fromARGB(255, 28, 28, 30),
+                        ),
+                        borderRadius: BorderRadius.circular(50),
                       ),
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    child: Text(
-                      "Register",
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 28, 28, 30),
-                        fontSize: 16,
-                        fontWeight: FontWeight(600),
+                      child: Text(
+                        "Register",
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 28, 28, 30),
+                          fontSize: 16,
+                          fontWeight: FontWeight(600),
+                        ),
                       ),
                     ),
                   ),
