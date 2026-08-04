@@ -1,7 +1,5 @@
 // ignore_for_file: unused_import
 import 'package:flutter_first/screens/Register_Screen.dart';
-import 'package:flutter_first/screens/test_animations_fonts.dart';
-import 'package:flutter_first/screens/test_drawer_youyube.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_first/screens/Login_Screen.dart';
