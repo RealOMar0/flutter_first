@@ -2,3 +2,42 @@ flutter gem
 lottie
 error builder
 pub.dev
+اتعلم ازاي اخفي النص
+
+اتعلم
+class CustomTextField extends StatelessWidget {
+  const CustomTextField({
+    super.key,
+    required this.hintText,
+    this.icon,
+  });
+
+  final String hintText;
+  final IconData? icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 60,
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(color: const Color(0xFFCDCDCE)),
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: hintText,
+                border: InputBorder.none,
+              ),
+            ),
+          ),
+          if (icon != null) Icon(icon),
+        ],
+      ),
+    );
+  }
+}
