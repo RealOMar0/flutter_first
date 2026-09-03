@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_first/widgets/home_chips.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_first/data/products_data.dart';
 import 'package:flutter_first/widgets/product_card.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class ElectronicsScreen extends StatelessWidget {
+  const ElectronicsScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,41 +17,9 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 const SizedBox(height: 8),
 
-                const HomeCategorySection(),
-
-                const SizedBox(height: 20),
-
-                Container(
-                  width: double.infinity,
-                  height: 200,
-                  padding: const EdgeInsets.all(24),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF1C1C1E),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.videogame_asset_rounded,
-                          color: Colors.white, size: 44),
-                      SizedBox(height: 10),
-                      Text('Level up your setup',
-                          style: TextStyle(color: Colors.white, fontSize: 24,
-                              fontWeight: FontWeight.bold)),
-                      SizedBox(height: 4),
-                      Text('Gaming essentials, all in one place',
-                          style: TextStyle(color: Colors.white70, fontSize: 13)),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 20),
-
-                
+                // ── Top Picks ──
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -78,28 +40,30 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
 
-                
+                const SizedBox(height: 12),
+
                 SizedBox(
                   height: 260,
                   child: ListView.separated(
                     scrollDirection: Axis.horizontal,
                     physics: const BouncingScrollPhysics(),
                     separatorBuilder: (_, _) => const SizedBox(width: 12),
-                    itemCount: products.length,
+                    itemCount: electronicsProducts.length,
                     itemBuilder: (_, i) => SizedBox(
                       width: 160,
-                      child: ProductCard(product: products[i]),
+                      child: ProductCard(product: electronicsProducts[i]),
                     ),
                   ),
                 ),
 
                 const SizedBox(height: 20),
 
+                // ── All Electronics ──
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "New Drops",
+                      "All Electronics",
                       style: GoogleFonts.inter(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
@@ -115,18 +79,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
 
+                const SizedBox(height: 12),
+
                 GridView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: products.length,
-                  gridDelegate:
-                      const SliverGridDelegateWithFixedCrossAxisCount(
+                  itemCount: electronicsProducts.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 12,
                     mainAxisSpacing: 12,
                     childAspectRatio: 0.72,
                   ),
-                  itemBuilder: (_, i) => ProductCard(product: products[i]),
+                  itemBuilder: (_, i) =>
+                      ProductCard(product: electronicsProducts[i]),
                 ),
 
                 const SizedBox(height: 24),

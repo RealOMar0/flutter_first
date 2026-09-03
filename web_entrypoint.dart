@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: SplashScreen());
+    return const MaterialApp(home: SplashScreen());
   }
 }
 
@@ -19,8 +19,8 @@ class SplashScreen extends StatelessWidget { // اختصارها هوا Stl
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 173, 14, 14),
+    return const Scaffold(
+      backgroundColor: Color.fromARGB(255, 173, 14, 14),
       body: Center(
         child: Text(
           "OMarrrrr",

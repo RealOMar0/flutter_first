@@ -1,8 +1,7 @@
-// ignore_for_file: file_names, avoid_unnecessary_containers
-
 import 'package:flutter/material.dart';
-import 'package:flutter_first/screens/Home_Screen.dart';
-import 'package:flutter_first/screens/Register_Screen.dart';
+import 'package:flutter_first/widgets/text_field.dart';
+import 'package:flutter_first/screens/home_screen.dart';
+import 'package:flutter_first/screens/register_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -13,158 +12,120 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   IconData eyeIcon = Icons.remove_red_eye_outlined;
+  bool obscurePassword = true;
   bool checkedBox = false;
 
   @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(         // const make erorr
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: GestureDetector(
-            behavior: HitTestBehavior.opaque, // dy bt8ra ay 9'gh6h 3la alshashh wbt7mlha unfocus
-            onTap:(){
-                  FocusScope.of(context).unfocus(); // bet3mal unfocus 3la el text field 
-            },
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
         child: SafeArea(
           child: Padding(
-            padding: EdgeInsets.all(15),
-            child: Padding(
-              padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, 0),
-              child: SingleChildScrollView( // momken a3ml scroll (helps to fix bottom overflow)
+            padding: const EdgeInsets.all(15),
+            child: Form(
+              key: _formKey,
+              child: SingleChildScrollView(
                 child: Column(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Verve",
+                          "GameVault",
                           style: GoogleFonts.sedanSc(
                             fontSize: 25,
-                            color: Color.fromARGB(255, 28, 28, 30),
-                            fontWeight: FontWeight(700),
+                            color: const Color.fromARGB(255, 28, 28, 30),
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                         Text(
                           "Select Contry",
                           style: GoogleFonts.inter(
                             fontSize: 12,
-                            color: Color(0xFF5E5CE6),
-                            fontWeight: FontWeight(500),
+                            color: const Color(0xFF5E5CE6),
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ],
                     ),
-                    
-                    SizedBox(width: double.infinity, height: 10),
-                        
+                    const SizedBox(width: double.infinity, height: 10),
                     Container(
                       alignment: Alignment.centerLeft,
                       child: Text(
                         "Welcome back",
                         style: GoogleFonts.inter(
                           fontSize: 20,
-                          color: Color.fromARGB(255, 0, 0, 0),
-                          fontWeight: FontWeight(620),
+                          color: const Color.fromARGB(255, 0, 0, 0),
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
-                    
-                    SizedBox(width: double.infinity, height: 10),
-                        
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.all(15),
-                      width: double.infinity,
-                      height: 60,
-                        
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(color: Color(0xFFCDCDCE)),
-                        
-                        color: Color.fromARGB(255, 255, 255, 255),
-                      ),
-                        
-                      child: TextField(
-                        cursorHeight: 20,
-                        style: GoogleFonts.roboto(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black),
-                        decoration: InputDecoration(
-                          hintText: "Email",
-                          hintStyle:
-                          GoogleFonts.alef(
-                          color: Color.fromARGB(170, 205, 205, 206),
-                          fontSize: 20,
-                          fontWeight: FontWeight(500),
+                    const SizedBox(width: double.infinity, height: 10),
+                    VerveTextField(
+                      label: "Email Address",
+                      keyboardType: TextInputType.emailAddress,
+                      controller: emailController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "This field can not be empty";
+                        }
+                        return null;
+                      },
+                      textInputAction: TextInputAction.search,
+                    ),
+                    const SizedBox(width: double.infinity, height: 20),
+                    VerveTextField(
+                      controller: passwordController,
+                      label: "Password",
+                      keyboardType: TextInputType.visiblePassword,
+                      textInputAction: TextInputAction.next,
+                      obscureText: obscurePassword,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Enter your password";
+                        }
+                        if (value.length < 8) {
+                          return "Min 8 characters";
+                        }
+                        return null;
+                      },
+                      suffixIcon: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            obscurePassword = !obscurePassword;
+                          });
+                        },
+                        child: Icon(
+                          obscurePassword
+                              ? Icons.remove_red_eye_outlined
+                              : Icons.visibility_off,
                         ),
-                       // border: InputBorder.none, // it hide the line under the user-text
-                        ),
-                        
                       ),
                     ),
-                        
-                    SizedBox(width: double.infinity, height: 20),
-                        
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.all(15),
-                      width: double.infinity,
-                      height: 60,
-                        
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(color: Color(0xFFCDCDCE)),
-                        
-                        color: Color.fromARGB(255, 255, 255, 255),
-                      ),
-                        
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded( // 3shan text field ya5d almsa7h almta7h bs
-                            child: TextField(
-                              cursorHeight: 20,
-                              style: GoogleFonts.roboto(
-                               fontSize: 16,
-                               fontWeight: FontWeight.w400,
-                               color: Colors.black),
-                        
-                              decoration: InputDecoration(
-                                hintText: "Password",
-                                hintStyle: GoogleFonts.alef(
-                                color: Color.fromARGB(170, 205, 205, 206),
-                                fontSize: 20,
-                                fontWeight: FontWeight(500)),
-                              
-                              ),
-                              //obscureText: true,     LATER
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                if (eyeIcon == Icons.remove_red_eye_outlined) {
-                                  eyeIcon = Icons.visibility_off;
-                                } else {
-                                  eyeIcon = Icons.remove_red_eye_outlined;
-                                }
-                              });
-                            },
-                            child: Icon(eyeIcon),
-                          ),
-                        ],
-                      ),
-                    ),
-                    
-                    SizedBox(width: double.infinity, height: 18),
-                    
+                    const SizedBox(width: double.infinity, height: 18),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SizedBox(
                           width: 20,
-                          height:20, // Hena el checkbox bemla elmsa7a klaha f bekon akber (20px mazbot)
+                          height: 20,
                           child: Checkbox(
                             value: checkedBox,
                             onChanged: (value) {
@@ -172,110 +133,100 @@ class _LoginScreenState extends State<LoginScreen> {
                                 checkedBox = value!;
                               });
                             },
-                            activeColor: Color.fromARGB(255, 0, 0, 0),
+                            activeColor: const Color.fromARGB(255, 0, 0, 0),
                           ),
                         ),
-                        
-                        SizedBox(width: 8), // Zakeeeeeeeeeeeeeeer!!
+                        const SizedBox(width: 8),
                         Container(
                           alignment: Alignment.centerLeft,
                           child: Text(
                             "Remember Me",
                             style: GoogleFonts.inter(
                               fontSize: 13,
-                              color: Color.fromARGB(255, 0, 0, 0),
-                              fontWeight: FontWeight(400),
+                              color: const Color.fromARGB(255, 0, 0, 0),
+                              fontWeight: FontWeight.w400,
                             ),
                           ),
                         ),
-                        
-                        Spacer(), // Zakeeeeeeeeeeeeeeer!!!!
-                        Text(
-                          "Forgot Password?",
-                          style: GoogleFonts.inter(
-                            fontSize: 12,
-                            color: Color(0xFF5E5CE6),
-                            fontWeight: FontWeight(400),
+                        const Spacer(),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, "/resetpassword");
+                          },
+                          child: Text(
+                            "Forgot Password?",
+                            style: GoogleFonts.inter(
+                              fontSize: 12,
+                              color: const Color(0xFF5E5CE6),
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
                         ),
                       ],
                     ),
-                    
-                    SizedBox(height: 32),
-                    
+                    const SizedBox(height: 32),
                     Center(
                       child: GestureDetector(
-                        onTap:(){
-                          Navigator.push(
-                        context,MaterialPageRoute(builder: ((context) => HomeScreen()))
-                      );
+                        onTap: () {
+                          if (_formKey.currentState!.validate()) {
+                            Navigator.pushReplacementNamed(context, '/main');
+                          }
                         },
                         child: Container(
-                          padding: EdgeInsets.fromLTRB(24, 8, 24, 8),
+                          padding: const EdgeInsets.fromLTRB(24, 8, 24, 8),
                           alignment: Alignment.center,
-                          //width: 360,
                           height: 50,
-                          
                           decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 28, 28, 30),
+                            color: const Color.fromARGB(255, 28, 28, 30),
                             borderRadius: BorderRadius.circular(50),
                           ),
-                          child: Text(
+                          child: const Text(
                             "Sign In",
                             style: TextStyle(
                               color: Color.fromARGB(255, 255, 255, 255),
                               fontSize: 16,
-                              fontWeight: FontWeight(600),
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
                       ),
                     ),
-                    
-                    SizedBox(height: 32),
-                    
-                    Divider(color: Color(0xFFCDCDCE)),
-                    
-                    SizedBox(height: 31),
-                    
+                    const SizedBox(height: 32),
+                    const Divider(color: Color(0xFFCDCDCE)),
+                    const SizedBox(height: 31),
                     Container(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "New to Verve",
+                        "New to GameVault",
                         style: GoogleFonts.inter(
                           fontSize: 20,
-                          color: Color.fromARGB(255, 28, 28, 30),
-                          fontWeight: FontWeight(600),
+                          color: const Color.fromARGB(255, 28, 28, 30),
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
-                    
-                    SizedBox(height: 16),
-                    
+                    const SizedBox(height: 16),
                     GestureDetector(
-                      onTap: (){
-                      Navigator.push(
-                        context,MaterialPageRoute(builder: ((context) => RegisterScreen()))
-                      );
+                      onTap: () {
+                        Navigator.pushNamed(context, '/register');
                       },
                       child: Center(
                         child: Container(
-                          padding: EdgeInsets.fromLTRB(24, 8, 24, 8),
+                          padding: const EdgeInsets.fromLTRB(24, 8, 24, 8),
                           alignment: Alignment.center,
                           height: 50,
-                      
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: Color.fromARGB(255, 28, 28, 30),
+                              color: const Color.fromARGB(255, 28, 28, 30),
                             ),
                             borderRadius: BorderRadius.circular(50),
                           ),
-                          child: Text(
+                          child: const Text(
                             "Register",
                             style: TextStyle(
                               color: Color.fromARGB(255, 28, 28, 30),
                               fontSize: 16,
-                              fontWeight: FontWeight(600),
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
